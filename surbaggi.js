@@ -8,7 +8,7 @@ let toY;
 let turnOf=1
 //set canvas width=4x+2m-1 & height=8x+2m-1  -1 is bugfix
 var ctx = canvas.getContext("2d");
-boardDraw();
+// boardDraw();
 let piecePosition=   [//0 invalid pos 1 blue 2 red 3 empty ;
 [2,0,2,0,2],
 [0,2,2,2,0],
@@ -20,7 +20,8 @@ let piecePosition=   [//0 invalid pos 1 blue 2 red 3 empty ;
 [0,1,1,1,0],
 [1,0,1,0,1],
  ];
-pieceDraw();
+// pieceDraw();
+const refresh=boardDraw();pieceDraw();id('notice').innerHTML=`player ${turnOf}'s turn`
 let reachable=[];
 let canReach = {
 "11": [
