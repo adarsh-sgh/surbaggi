@@ -1,6 +1,6 @@
 var canvas = document.getElementById("board");
-const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+const vw = Math.min(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+const vh = Math.min(document.documentElement.clientHeight || 0, window.innerHeight || 0)
 let x=Math.min(vw/6,vh/10)//magnification
 let m=x/2//margin
 let fromX;
