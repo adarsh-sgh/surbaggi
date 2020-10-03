@@ -1,7 +1,7 @@
 var canvas = document.getElementById("board");
 const vw = Math.min(document.documentElement.clientWidth || 0, window.innerWidth || 0)
 const vh = Math.min(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-let x=Math.min(vw/6,vh/10)//magnification
+let x=100//Math.min(vw/6,vh/10)//magnification
 let m=x/2//margin
 let fromX;
 let fromY;
@@ -372,4 +372,23 @@ function killStreak(evnt){
         pieceMover(evnt)
     }
 }
-function refresh(){boardDraw();pieceDraw();id('notice').innerHTML=`player ${turnOf}'s turn`}
+function refresh(){boardDraw();pieceDraw();turnUpdate();
+
+function turnUpdate() {//tells users whose turn it is
+
+    if (turnOf == 2) {
+        ctx.save();
+        ctx.scale(-1,-1)  
+        ctx.fillStyle = 'Red';
+        ctx.font=`${x/3}px Arial`
+        ctx.fillText('Your Turn',-2*x+m,-5/2*x+m);
+        ctx.restore();
+    }
+    if(turnOf == 1){
+        ctx.fillStyle='blue';
+        ctx.font=`${x/3}px Arial`;
+        ctx.fillText('Your Turn',3*x+m,6.5*x+m)
+
+    }
+}
+}
