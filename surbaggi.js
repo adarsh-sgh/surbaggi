@@ -1,14 +1,15 @@
 var canvas = document.getElementById("board");
-let x=100//magnification
+const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+let x=Math.min(vw/6,vh/10)//magnification
 let m=x/2//margin
 let fromX;
 let fromY;
 let toX;
 let toY;
 let turnOf=1
-//set canvas width=4x+2m-1 & height=8x+2m-1  -1 is bugfix
+canvas.width=4*x+2*m-1 ;canvas.height=8*x+2*m-1 // -1 is bugfix
 var ctx = canvas.getContext("2d");
-// boardDraw();
 let piecePosition=   [//0 invalid pos 1 blue 2 red 3 empty ;
 [2,0,2,0,2],
 [0,2,2,2,0],
@@ -20,8 +21,7 @@ let piecePosition=   [//0 invalid pos 1 blue 2 red 3 empty ;
 [0,1,1,1,0],
 [1,0,1,0,1],
  ];
-// pieceDraw();
-const refresh=boardDraw();pieceDraw();id('notice').innerHTML=`player ${turnOf}'s turn`
+refresh();
 let reachable=[];
 let canReach = {
 "11": [
@@ -273,6 +273,7 @@ function boardDraw(){
     lineDraw(2,0,2,8);lineDraw(0,4,4,4)//central line
 }
 function lineDraw(x1,y1,x2,y2){
+    ctx.beginPath();
     ctx.moveTo(x1*x+m,y1*x+m);
     ctx.lineTo(x2*x+m,y2*x+m);
     ctx.stroke();
@@ -319,8 +320,8 @@ function clickHandler(evnt) {
     let borderWidth = +((getComputedStyle(document.getElementById('board'), null).getPropertyValue('border-left-width')).replace('px', ''))
     let xcanvas = evnt.clientX - rect.left - borderWidth
     let ycanvas = evnt.clientY - rect.top - borderWidth;
-    fromX = Math.floor(xcanvas / 100)//0-4
-    fromY = Math.floor(ycanvas / 100)//0-8
+    fromX = Math.floor(xcanvas / x)//0-4
+    fromY = Math.floor(ycanvas / x)//0-8
     if (piecePosition[fromY][fromX]!=turnOf){return}
     id('board').setAttribute('onclick','pieceMover(event)')
     highlight(fromX,fromY,'green');
@@ -334,8 +335,8 @@ function pieceMover(evnt) {
     let borderWidth = +((getComputedStyle(document.getElementById('board'), null).getPropertyValue('border-left-width')).replace('px', ''))
     let xcanvas = evnt.clientX - rect.left - borderWidth
     let ycanvas = evnt.clientY - rect.top - borderWidth;
-     toX = Math.floor(xcanvas / 100)//0-4
-     toY = Math.floor(ycanvas / 100)//0-8
+     toX = Math.floor(xcanvas / x)//0-4
+     toY = Math.floor(ycanvas / x)//0-8
     let canKill=piecePosition[(fromY+toY)/2] && piecePosition[(fromY+toY)/2][(fromX+toX)/2]==(3-turnOf)&&piecePosition[toY] && piecePosition[toY][toX]==3
     if(canReach[String(fromX)+String(fromY)].includes(String(toX) + String(toY))){
       if (piecePosition[toY] && piecePosition[toY][toX]==3) {
@@ -347,10 +348,10 @@ function pieceMover(evnt) {
     if(canKill){
         piecePosition[fromY][fromX]=3; piecePosition[toY][toX]=turnOf;piecePosition[(fromY+toY)/2][(fromX+toX)/2]=3;turnOf=3-turnOf
          id('board').setAttribute('onclick','killStreak(event)');
-         ctx.clearRect(0,0,canvas.width,canvas.height);boardDraw();pieceDraw();
+         ctx.clearRect(0,0,canvas.width,canvas.height);refresh();
          return;
      }  
-    ctx.clearRect(0,0,canvas.width,canvas.height);boardDraw();pieceDraw()
+    ctx.clearRect(0,0,canvas.width,canvas.height);refresh();
     id('board').setAttribute('onclick','clickHandler(event)')
 }
 function id(elementId){return document.getElementById(elementId)};
@@ -359,8 +360,8 @@ function killStreak(evnt){
     let borderWidth = +((getComputedStyle(document.getElementById('board'), null).getPropertyValue('border-left-width')).replace('px', ''))
     let xcanvas = evnt.clientX - rect.left - borderWidth
     let ycanvas = evnt.clientY - rect.top - borderWidth;
-    let xclicked = Math.floor(xcanvas / 100)//0-4
-    let yclicked = Math.floor(ycanvas / 100)//0-8
+    let xclicked = Math.floor(xcanvas / x)//0-4
+    let yclicked = Math.floor(ycanvas / x)//0-8
     let streakMissed=(piecePosition[yclicked][xclicked]==turnOf)
     if(streakMissed){
         clickHandler(evnt)
@@ -371,3 +372,4 @@ function killStreak(evnt){
         pieceMover(evnt)
     }
 }
+function refresh(){boardDraw();pieceDraw();id('notice').innerHTML=`player ${turnOf}'s turn`}
