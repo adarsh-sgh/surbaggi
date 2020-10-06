@@ -372,23 +372,58 @@ function killStreak(evnt){
         pieceMover(evnt)
     }
 }
-function refresh(){boardDraw();pieceDraw();turnUpdate();
+function refresh() {
+    boardDraw();
+    pieceDraw();
+    turnUpdate();
+    barrackCheck()
 
-function turnUpdate() {//tells users whose turn it is
+    function turnUpdate() { //tells users whose turn it is
+        if (turnOf == 2) {
+            ctx.save();
+            ctx.scale(-1, -1)
+            ctx.fillStyle = 'Red';
+            ctx.font = `${x/3}px Arial`
+            ctx.fillText('Your Turn', -2 * x + m, -5 / 2 * x + m);
+            ctx.restore();
+        }
+        if (turnOf == 1) {
+            ctx.fillStyle = 'blue';
+            ctx.font = `${x/3}px Arial`;
+            ctx.fillText('Your Turn', 3 * x + m, 6.5 * x + m)
 
-    if (turnOf == 2) {
-        ctx.save();
-        ctx.scale(-1,-1)  
-        ctx.fillStyle = 'Red';
-        ctx.font=`${x/3}px Arial`
-        ctx.fillText('Your Turn',-2*x+m,-5/2*x+m);
-        ctx.restore();
-    }
-    if(turnOf == 1){
-        ctx.fillStyle='blue';
-        ctx.font=`${x/3}px Arial`;
-        ctx.fillText('Your Turn',3*x+m,6.5*x+m)
-
+        }
     }
 }
+function barrackCheck(){
+    if( piecePosition[0][0]==3&&
+        piecePosition[0][2]==3&&
+        piecePosition[0][4]==3&&
+        piecePosition[1][1]==3&&
+        piecePosition[1][2]==3&&
+        piecePosition[1][3]==3
+        ){
+        piecePosition[0][0]=0;
+        piecePosition[0][2]=0;
+        piecePosition[0][4]=0;
+        piecePosition[1][1]=0;
+        piecePosition[1][2]=0;
+        piecePosition[1][3]=0;
+        lineDraw(1,1.5,3,1.5)
+        };
+        if( piecePosition[8][0]==3&&
+            piecePosition[8][2]==3&&
+            piecePosition[8][4]==3&&
+            piecePosition[7][1]==3&&
+            piecePosition[7][2]==3&&
+            piecePosition[7][3]==3
+            ){
+            piecePosition[8][0]=0;
+            piecePosition[8][2]=0;
+            piecePosition[8][4]=0;
+            piecePosition[7][1]=0;
+            piecePosition[7][2]=0;
+            piecePosition[7][3]=0;
+            lineDraw(1,6.5,3,6.5)
+            }
 }
