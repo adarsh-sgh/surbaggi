@@ -1,7 +1,7 @@
 var canvas = document.getElementById("board");
-const vw = Math.min(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-const vh = Math.min(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-let x=100//Math.min(vw/6,vh/10)//magnification
+const vw = Math.min(document.documentElement.clientWidth , window.innerWidth )//viewport width
+const vh = Math.min(document.documentElement.clientHeight, window.innerHeight)
+let x=Math.min(vw/6,vh/10)||100//magnification
 let m=x/2//margin
 let fromX;
 let fromY;
@@ -409,7 +409,8 @@ function barrackCheck(){
         piecePosition[1][1]=0;
         piecePosition[1][2]=0;
         piecePosition[1][3]=0;
-        lineDraw(1,1.5,3,1.5)
+        lineDraw(1,1.5,3,1.5);
+        id('notice').innerHTML=`A barrack can't be re-entered once emptied`
         };
         if( piecePosition[8][0]==3&&
             piecePosition[8][2]==3&&
@@ -424,6 +425,7 @@ function barrackCheck(){
             piecePosition[7][1]=0;
             piecePosition[7][2]=0;
             piecePosition[7][3]=0;
-            lineDraw(1,6.5,3,6.5)
+            lineDraw(1,6.5,3,6.5);
+            id('notice').innerHTML=`A barrack can't be re-entered once emptied`
             }
 }
