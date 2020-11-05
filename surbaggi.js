@@ -309,7 +309,6 @@ function highlight(x1,y1,color='yellow'){
     grd.addColorStop(1,color);
     ctx.beginPath();
     ctx.arc(x1*x+m, y1*x+m, x/4, 0, 2 * Math.PI);
-    // ctx.stroke();
     ctx.fillStyle = grd;
     ctx.fill()
 }
