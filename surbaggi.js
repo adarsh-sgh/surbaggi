@@ -427,3 +427,4 @@ function barrackCheck(){
             id('notice').innerHTML=`A barrack can't be re-entered once emptied`
             }
 }
+//this is only meant for surbaggionline
