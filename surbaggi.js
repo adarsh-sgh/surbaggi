@@ -10,6 +10,7 @@ let toY;
 let turnOf=1
 canvas.width=4*x+2*m-1 ;canvas.height=8*x+2*m-1 // -1 is bugfix
 var ctx = canvas.getContext("2d");
+let timeoutId
 let piecePosition=   [//0 invalid pos 1 blue 2 red 3 empty ;
 [2,0,2,0,2],
 [0,2,2,2,0],
@@ -22,7 +23,6 @@ let piecePosition=   [//0 invalid pos 1 blue 2 red 3 empty ;
 [1,0,1,0,1],
  ];
 refresh();
-let reachable=[];
 let canReach = {
 "11": [
 "21",
@@ -259,8 +259,7 @@ let canReach = {
 "28",
 "17"
 ]
-}
-;
+};
 function boardDraw(){
     lineDraw(0,0,4,4);lineDraw(4,4,0,8);lineDraw(0,8,4,8);lineDraw(4,8,0,4);lineDraw(0,4,4,0);lineDraw(4,0,0,0);
     rectangleDraw(0,2,4,4)
@@ -314,20 +313,27 @@ function highlight(x1,y1,color='yellow'){
     ctx.fill()
 }
 function clickHandler(evnt) {
+    if(turnOf==2){return alert('let your opponent move first')}
     let rect = canvas.getBoundingClientRect();
     let borderWidth = +((getComputedStyle(document.getElementById('board'), null).getPropertyValue('border-left-width')).replace('px', ''))
     let xcanvas = evnt.clientX - rect.left - borderWidth
     let ycanvas = evnt.clientY - rect.top - borderWidth;
     fromX = Math.floor(xcanvas / x)//0-4
     fromY = Math.floor(ycanvas / x)//0-8
-    if (piecePosition[fromY][fromX]!=turnOf){return}
+    if (piecePosition[fromY][fromX]!=1){return}
     id('board').setAttribute('onclick','pieceMover(event)')
     highlight(fromX,fromY,'green');
     canReach[String(fromX)+String(fromY)].forEach((item)=>{
-        if(piecePosition[+item[1]][+item[0]]==3) {highlight(+item[0],+item[1])}
+        if(piecePosition[+item[1]][+item[0]]==3) {
+            highlight(+item[0],+item[1])
+        }
+        if(piecePosition[+item[1]][+item[0]]==2&&piecePosition[2*+item[1]-fromY][2*+item[0]-fromX]==3) {
+            highlight(2*+item[0]-fromX,2*+item[1]-fromY,'black')
+        }
+        
     })
 }
-function pieceMover(evnt) {
+function pieceMover(evnt,killStreaking=false) {
     
     let rect = canvas.getBoundingClientRect();
     let borderWidth = +((getComputedStyle(document.getElementById('board'), null).getPropertyValue('border-left-width')).replace('px', ''))
@@ -335,17 +341,33 @@ function pieceMover(evnt) {
     let ycanvas = evnt.clientY - rect.top - borderWidth;
      toX = Math.floor(xcanvas / x)//0-4
      toY = Math.floor(ycanvas / x)//0-8
-    let canKill=piecePosition[(fromY+toY)/2] && piecePosition[(fromY+toY)/2][(fromX+toX)/2]==(3-turnOf)&&piecePosition[toY] && piecePosition[toY][toX]==3
-    if(canReach[String(fromX)+String(fromY)].includes(String(toX) + String(toY))){
+    
+    if(canReach[String(fromX)+String(fromY)].includes(String(toX) + String(toY))&&!killStreaking){
       if (piecePosition[toY] && piecePosition[toY][toX]==3) {
           piecePosition[toY][toX] = piecePosition[fromY][fromX]
           piecePosition[fromY][fromX] = 3;
           turnOf = 3 - turnOf;
+          //socket message here
       };
     }
+    let canKill=piecePosition[(fromY+toY)/2] && piecePosition[(fromY+toY)/2][(fromX+toX)/2]==2&&piecePosition[toY] && piecePosition[toY][toX]==3
     if(canKill){
-        piecePosition[fromY][fromX]=3; piecePosition[toY][toX]=turnOf;piecePosition[(fromY+toY)/2][(fromX+toX)/2]=3;turnOf=3-turnOf
-         id('board').setAttribute('onclick','killStreak(event)');
+        if(killStreaking&&timeoutId){clearTimeout(timeoutId)}
+        piecePosition[fromY][fromX]=3; piecePosition[toY][toX]=turnOf;piecePosition[(fromY+toY)/2][(fromX+toX)/2]=3;
+        //send kill message
+        if(!killStreakPossible(`${toX}${toY}`)){
+            turnOf=3-turnOf
+            //  socket assure no multikill
+        } else{
+            fromX=toX;
+            fromY=toY;
+            id('board').setAttribute('onclick','pieceMover(event,true)')
+            timeoutId= setTimeout(() => {
+                turnOf=3-turnOf; 
+                //assure no multikill
+            }, 9000);
+        }
+
          ctx.clearRect(0,0,canvas.width,canvas.height);refresh();
          return;
      }  
@@ -427,4 +449,29 @@ function barrackCheck(){
             id('notice').innerHTML=`A barrack can't be re-entered once emptied`
             }
 }
-//this is only meant for surbaggionline
+function killStreakPossible(p) {
+    canReach[p].forEach(
+        e=>{
+        if(pp(e)==2&&pp(ap(p,e))==3){return true}
+        }
+        )
+return false
+}
+function pp(coordinateString,value=undefined) {
+    if (value==undefined) {
+      return piecePosition[coordinateString[1]][coordinateString[0]]
+    }
+    piecePosition[coordinateString[1]][coordinateString[0]]=value
+  };
+  function ap(a1,a2) {//third term of ap
+    a1=String(a1)
+    a2=String(a2);
+    let a3= String(2*+a2[0]-+a1[0])+String(2*+a2[1]-+a1[1])
+    return a3
+  }
+  function executeMessage(mdata,targetArray=pp) {
+  targetArray(mdata.slice(0,2),3);
+  targetArray(mdata.slice(2,4),2);
+  let midPoint=`${(+mdata[0]+(+mdata[2]))/2}${(+mdata[1]+(+mdata[3]))/2}`
+  if(piecePosition[midPoint[0]]&&targetArray(midPoint)){targetArray(midPoint,3)}
+  }
