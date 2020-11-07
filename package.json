@@ -1,0 +1,27 @@
+{
+  "name": "surbaggi",
+  "version": "1.0.0",
+  "description": "online surbaggi",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lkiThakur/surbaggi.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lkiThakur/surbaggi/issues"
+  },
+  "homepage": "https://github.com/lkiThakur/surbaggi#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^3.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  }
+}
