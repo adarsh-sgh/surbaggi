@@ -323,7 +323,10 @@ function clickHandler(evnt) {
     id('board').setAttribute('onclick','pieceMover(event)')
     highlight(fromX,fromY,'green');
     canReach[String(fromX)+String(fromY)].forEach((item)=>{
-        if(piecePosition[+item[1]][+item[0]]==3) {highlight(+item[0],+item[1])}
+        if(piecePosition[+item[1]][+item[0]]==3) {highlight(+item[0],+item[1])};
+        if(piecePosition[+item[1]][+item[0]]==3-turnOf&&piecePosition[2*+item[1]-fromY][2*+item[0]-fromX]==3) {
+            highlight(2*+item[0]-fromX,2*+item[1]-fromY,'black')
+        }
     })
 }
 function pieceMover(evnt) {
