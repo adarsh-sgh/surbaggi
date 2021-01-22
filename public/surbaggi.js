@@ -1,5 +1,8 @@
 const socket=io();
-socket.on('paired',()=>{console.log('an user has acceped your challenge')})
+socket.on("paired", () => {
+  console.log("an user has acceped your challenge");
+  refresh();
+});
 socket.on('move',msg=>{
     console.log(msg)
     executeMessage(msg);
