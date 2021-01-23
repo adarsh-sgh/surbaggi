@@ -1,6 +1,7 @@
 const socket=io();
 socket.on("paired", () => {
   console.log("an user has acceped your challenge");
+  paired=true;
   refresh();
 });
 socket.on('move',msg=>{
@@ -35,20 +36,25 @@ let fromY;
 let toX;
 let toY;
 let turnOf=2
+let paired =false;//variable to track paired status
 canvas.width=4*x+2*m-1 ;canvas.height=8*x+2*m-1 // -1 is bugfix
 var ctx = canvas.getContext("2d");
 let timeoutId
-let piecePosition=   [//0 invalid pos 1 blue 2 red 3 empty ;
-[2,0,2,0,2],
-[0,2,2,2,0],
-[2,2,2,2,2],
-[2,2,2,2,2],
-[3,3,3,3,3],
-[1,1,1,1,1],
-[1,1,1,1,1],
-[0,1,1,1,0],
-[1,0,1,0,1],
- ];
+let piecePosition;
+ function resetBoard() {
+    piecePosition=   [//0 invalid pos 1 blue 2 red 3 empty ;
+        [2,0,2,0,2],
+        [0,2,2,2,0],
+        [2,2,2,2,2],
+        [2,2,2,2,2],
+        [3,3,3,3,3],
+        [1,1,1,1,1],
+        [1,1,1,1,1],
+        [0,1,1,1,0],
+        [1,0,1,0,1],
+         ];
+ }
+ resetBoard();
 refresh();
 let canReach = {"11": ["21","00","22"],
 "12": ["22","02","13"],
@@ -140,6 +146,7 @@ function highlight(x1,y1,color='yellow'){
     ctx.fill()
 }
 function clickHandler(evnt) {
+    if(!paired){return console.log("Still searching for opponent")}
     if(turnOf==2){return alert('let your opponent move first')}
     let rect = canvas.getBoundingClientRect();
     let borderWidth = +((getComputedStyle(document.getElementById('board'), null).getPropertyValue('border-left-width')).replace('px', ''))
@@ -161,7 +168,7 @@ function clickHandler(evnt) {
     })
 }
 function pieceMover(evnt,killStreaking=false) {
-    if(killStreaking){console.log('killstreaking')}
+    
     let rect = canvas.getBoundingClientRect();
     let borderWidth = +((getComputedStyle(document.getElementById('board'), null).getPropertyValue('border-left-width')).replace('px', ''))
     let xcanvas = evnt.clientX - rect.left - borderWidth
