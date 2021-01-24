@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
     <title>Surbaggi</title>
 </head>
 <body>
-    <h3 style="text-align: center;">Surbaggi</h3><p id="notice"></p>
+    <h3 style="text-align: center;">Surbaggi</h3>
+    <div id="notice" class="overlay">A notice will be served here </div>
     <canvas id="board" width="499" height="899" onclick="clickHandler(event)"></canvas>
     <script src="/socket.io/socket.io.js"></script>
     <script src="surbaggi.js"></script>
