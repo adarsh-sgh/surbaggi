@@ -45,6 +45,7 @@ io.on('connection',socket=>{
         )
     })
     socket.on('disconnect',()=>{
+        if(unpairedUser==socket.id){unpairedUser=null}
         socket.broadcast.to(rooms[socket.id]||socket.id).emit('opponentLeft')
     })
 })

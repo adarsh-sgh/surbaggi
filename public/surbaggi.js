@@ -1,17 +1,17 @@
 const socket=io();
 socket.on("paired", () => {
-  console.log("an user has acceped your challenge");
+  notice("an user has acceped your challenge",3000);
   paired=true;
   refresh();
 });
 socket.on('move',msg=>{
-    console.log(msg)
+    // console.log(msg)
     executeMessage(msg);
     turnOf=3-turnOf
     refresh()
 })
 socket.on('kill',msg=>{
-    console.log(msg)
+    //notice(msg)
     executeMessage(msg);
     refresh()
 })
@@ -23,7 +23,7 @@ socket.on(
     'firstPlayer',()=>{turnOf=1}
 )
 socket.on(
-    'opponentLeft',()=>{console.log('your opponent left the game')}
+    'opponentLeft',()=>{notice('your opponent left the game')}
 )
 
 var canvas = document.getElementById("board");
@@ -146,8 +146,8 @@ function highlight(x1,y1,color='yellow'){
     ctx.fill()
 }
 function clickHandler(evnt) {
-    if(!paired){return console.log("Still searching for opponent")}
-    if(turnOf==2){return alert('let your opponent move first')}
+    if(!paired){return notice("Still searching for opponent",2000)}
+    if(turnOf==2){return notice('let your opponent move first',1000)}
     let rect = canvas.getBoundingClientRect();
     let borderWidth = +((getComputedStyle(document.getElementById('board'), null).getPropertyValue('border-left-width')).replace('px', ''))
     let xcanvas = evnt.clientX - rect.left - borderWidth
@@ -199,7 +199,7 @@ function pieceMover(evnt,killStreaking=false) {
             fromX=toX;
             fromY=toY;
             id('board').setAttribute('onclick','pieceMover(event,true)');
-            console.log('You have 9 seconds to perform killstreak')
+            notice('You have 9 seconds to perform killstreak',3000)
             timeoutId= setTimeout(() => {
                 turnOf=3-turnOf; 
                 socket.emit('!multiKill')
