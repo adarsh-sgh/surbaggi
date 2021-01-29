@@ -5,13 +5,12 @@ socket.on("paired", () => {
   refresh();
 });
 socket.on('move',msg=>{
-    // console.log(msg)
     executeMessage(msg);
     turnOf=3-turnOf
-    refresh()
+    refresh();
+    
 })
 socket.on('kill',msg=>{
-    //notice(msg)
     executeMessage(msg);
     refresh()
 })
@@ -359,4 +358,16 @@ function fade(selector = ".overlay") {
   }
   element.style.opacity = (element.style.opacity || 1) / 1.08;
   setTimeout(() => fade(selector), 20);
+};
+
+function showLastMove(x1,y1,x2,y2) {
+    ctx.save();
+    ctx.lineWidth=5;
+    ctx.beginPath();
+    ctx.moveTo(x1*x+m+5,y1*x+m+5);
+    ctx.lineTo(x2*x+m+5,y2*x+m+5);
+    ctx.font = `${x/2}px Arial`;
+    ctx.strokeStyle ='rgb(0, 153, 51,.6)';
+    ctx.stroke();
+    ctx.restore();
 }
