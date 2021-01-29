@@ -5,19 +5,33 @@ socket.on("paired", () => {
   refresh();
 });
 socket.on('move',msg=>{
-    executeMessage(msg);
+    let p1 = msg.slice(0, 2);
+      let p2 = msg.slice(2, 4);
+
+      p1 = ap(p1, '24'); //reflects the data about center
+      p2 = ap(p2, '24');
+    executeMessage(p1,p2);
     turnOf=3-turnOf
     refresh();
-    
+    showLastMove(p1[0],p1[1],p2[0],p2[1])
 })
-socket.on('kill',msg=>{
-    executeMessage(msg);
+{
+    let p1,p2
+    socket.on('kill',msg=>{
+     p1 = msg.slice(0, 2);
+     p2 = msg.slice(2, 4);
+
+    p1 = ap(p1, '24'); //reflects the data about center
+    p2 = ap(p2, '24');
+    executeMessage(p1,p2);
     refresh()
+    showLastMove(p1[0],p1[1],p2[0],p2[1])
 })
 socket.on('!multiKill',()=>{
     turnOf=3-turnOf;
     refresh()
-})
+    showLastMove(p1[0],p1[1],p2[0],p2[1])
+})}
 socket.on(
     'firstPlayer',()=>{turnOf=1}
 )
@@ -314,13 +328,7 @@ function pp(coordinateString,value=undefined) {
     let a3= String(2*+a2[0]-+a1[0])+String(2*+a2[1]-+a1[1])
     return a3
   }
-  function executeMessage(mdata) {
-      let p1 = mdata.slice(0, 2);
-      let p2 = mdata.slice(2, 4);
-
-      p1 = ap(p1, '24'); //reflects the data about center
-      p2 = ap(p2, '24');
-
+  function executeMessage(p1,p2) {
   pp(p1,3);
   pp(p2,2);
   let midPointx=(+p1[0]+(+p2[0]))/2;
@@ -358,14 +366,14 @@ function fade(selector = ".overlay") {
   }
   element.style.opacity = (element.style.opacity || 1) / 1.08;
   setTimeout(() => fade(selector), 20);
-};
+};//style.js ends
 
 function showLastMove(x1,y1,x2,y2) {
     ctx.save();
     ctx.lineWidth=5;
     ctx.beginPath();
-    ctx.moveTo(x1*x+m+5,y1*x+m+5);
-    ctx.lineTo(x2*x+m+5,y2*x+m+5);
+    ctx.moveTo(x1*x+m,y1*x+m+5);
+    ctx.lineTo(x2*x+m,y2*x+m+5);
     ctx.font = `${x/2}px Arial`;
     ctx.strokeStyle ='rgb(0, 153, 51,.6)';
     ctx.stroke();
