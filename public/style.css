@@ -14,3 +14,11 @@ h3{
 #notice{
     text-align: center;
 }
+#footer{
+    display: none;
+}
+@media only screen and (min-width: 500px) {
+#footer{
+    display: block;
+}
+}
