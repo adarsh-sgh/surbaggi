@@ -15,6 +15,9 @@ socket.on('move',msg=>{
     refresh();
     showLastMove(p1[0],p1[1],p2[0],p2[1])
 })
+socket.on('name',msg=>{
+    notice(`You're playing with ${msg}`)
+})
 {
     let p1,p2
     socket.on('kill',msg=>{
@@ -378,4 +381,12 @@ function showLastMove(x1,y1,x2,y2) {
     ctx.strokeStyle ='rgb(0, 153, 51,.6)';
     ctx.stroke();
     ctx.restore();
+}
+function sendName() {
+    if(!paired){
+        notice('No opponent has joined yet to talk and play :(')
+        return ;
+    }
+    let name=prompt("Send Your name to your opponent");
+    socket.emit('name',name)
 }

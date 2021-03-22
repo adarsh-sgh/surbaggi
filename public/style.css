@@ -8,6 +8,17 @@
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
 }
+#sendname{
+
+    border-radius: 25px;
+    background-color: green;
+    padding: 15px;
+    width: min-content;
+    display: block;
+    color: white;
+    font-size: large;
+
+}
 h3{
     display: none;
 }

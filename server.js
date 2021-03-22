@@ -44,6 +44,13 @@ io.on('connection',socket=>{
             '!multiKill',msg
         )
     })
+    socket.on('name',msg=>{
+        socket.broadcast
+        .to(rooms[socket.id]||socket.id)
+        .emit(
+            'name',msg
+        )
+    })
     socket.on('disconnect',()=>{
         if(unpairedUser==socket.id){unpairedUser=null}
         socket.broadcast.to(rooms[socket.id]||socket.id).emit('opponentLeft')
