@@ -315,7 +315,7 @@ function killStreakPossible(p) {
     return returnValue
     }
     
-
+// function to get and set a piece on board
 function pp(coordinateString,value=undefined) {
     if (value==undefined) {
       return piecePosition[coordinateString[1]][coordinateString[0]]
@@ -366,7 +366,8 @@ function fade(selector = ".overlay") {
   }
   element.style.opacity = (element.style.opacity || 1) / 1.08;
   setTimeout(() => fade(selector), 20);
-};//style.js ends
+};
+//style.js ends
 
 function showLastMove(x1,y1,x2,y2) {
     ctx.save();
@@ -374,7 +375,6 @@ function showLastMove(x1,y1,x2,y2) {
     ctx.beginPath();
     ctx.moveTo(x1*x+m,y1*x+m+5);
     ctx.lineTo(x2*x+m,y2*x+m+5);
-    ctx.font = `${x/2}px Arial`;
     ctx.strokeStyle ='rgb(0, 153, 51,.6)';
     ctx.stroke();
     ctx.restore();
