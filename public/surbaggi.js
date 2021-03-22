@@ -283,7 +283,7 @@ function barrackCheck(){
         piecePosition[1][2]=0;
         piecePosition[1][3]=0;
         lineDraw(1,1.5,3,1.5);
-        id('notice').innerHTML=`A barrack can't be re-entered once emptied`
+        notice(`A barrack can't be re-entered once emptied`,2000)
         };
         if( piecePosition[8][0]==3&&
             piecePosition[8][2]==3&&
@@ -299,7 +299,7 @@ function barrackCheck(){
             piecePosition[7][2]=0;
             piecePosition[7][3]=0;
             lineDraw(1,6.5,3,6.5);
-            id('notice').innerHTML=`A barrack can't be re-entered once emptied`
+           notice(`A barrack can't be re-entered once emptied`,2000)
             }
 }
 function killStreakPossible(p) {
