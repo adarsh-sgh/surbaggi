@@ -109,13 +109,14 @@ let canReach = {"11": ["21","00","22"],
 "05": ["15","04","06"],
 "06": ["16","15","05"],
 "08": ["28","17"]};
+
 function boardDraw(){
     lineDraw(0,0,4,4);lineDraw(4,4,0,8);lineDraw(0,8,4,8);lineDraw(4,8,0,4);lineDraw(0,4,4,0);lineDraw(4,0,0,0);
     rectangleDraw(0,2,4,4)
     lineDraw(0,2,4,6);lineDraw(4,2,0,6)//main diagnols
     lineDraw(1,2,1,6);lineDraw(3,2,3,6);//vertical lines
     lineDraw(0,3,4,3);lineDraw(0,5,4,5);//Hor lines
-    lineDraw(1,1,3,1);lineDraw(1,7,3,7)//melia hor line
+    lineDraw(1,1,3,1);lineDraw(1,7,3,7)//barrack hor line
     lineDraw(2,0,2,8);lineDraw(0,4,4,4)//central line
 }
 function lineDraw(x1,y1,x2,y2){
@@ -123,7 +124,6 @@ function lineDraw(x1,y1,x2,y2){
     ctx.moveTo(x1*x+m,y1*x+m);
     ctx.lineTo(x2*x+m,y2*x+m);
     ctx.stroke();
-    
 };
 function circleDraw(x1,y1,beadColor='black',radius=x/6){
     ctx.beginPath();
@@ -161,6 +161,7 @@ function highlight(x1,y1,color='yellow'){
     ctx.fillStyle = grd;
     ctx.fill()
 }
+
 function clickHandler(evnt) {
     if(!paired){return notice("Still searching for opponent",2000)}
     if(turnOf==2){return notice('let your opponent move first',1000)}
