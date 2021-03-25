@@ -1,3 +1,4 @@
+let killedPieces1=0,killedPieces2=0;
 const socket=io();
 socket.on("paired", () => {
   notice("an user has acceped your challenge",3000);
@@ -27,6 +28,10 @@ socket.on('name',msg=>{
     p1 = ap(p1, '24'); //reflects the data about center
     p2 = ap(p2, '24');
     executeMessage(p1,p2);
+    if(++killedPieces1==16){
+notice('You lost this game ')
+    };
+    id('killed1').innerHTML=killedPieces1
     refresh()
     showLastMove(p1[0],p1[1],p2[0],p2[1])
 })
@@ -206,7 +211,11 @@ function pieceMover(evnt,killStreaking=false) {
         if(killStreaking&&timeoutId){clearTimeout(timeoutId)}
         piecePosition[fromY][fromX]=3; piecePosition[toY][toX]=turnOf;piecePosition[(fromY+toY)/2][(fromX+toX)/2]=3;
         //send kill message
-        socket.emit('kill',`${fromX}${fromY}${toX}${toY}`)
+        socket.emit('kill',`${fromX}${fromY}${toX}${toY}`);
+        if(++killedPieces2==16){
+            notice("Congratulations : You Won")
+        }
+        id('killed2').innerHTML=killedPieces2;
         if(!killStreakPossible(`${toX}${toY}`)){
             turnOf=3-turnOf;
             socket.emit('!multiKill');
