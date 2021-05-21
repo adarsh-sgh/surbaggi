@@ -3,6 +3,7 @@ const http=require('http');
 const express=require('express');
 const socketio=require('socket.io')
 
+//unpairedUser stores socket.id of user
 let unpairedUser=null
 const rooms={}
 
