@@ -294,8 +294,13 @@ function barrackCheck(){
         piecePosition[0][4]=0;
         piecePosition[1][1]=0;
         piecePosition[1][2]=0;
-        piecePosition[1][3]=0;
-        lineDraw(1,1.5,3,1.5);
+        piecePosition[1][3] = 0;
+        ctx.save()
+        ctx.strokeStyle='rgb(255, 0, 0,1)'
+        lineDraw(1, 1.5, 3, 1.5);
+        ctx.strokeStyle='rgb(0, 0, 255,1)'
+        lineDraw(1, 1.6, 3, 1.6);
+        ctx.restore()
         notice(`A barrack can't be re-entered once emptied`,2000)
         };
         if( piecePosition[8][0]==3&&
