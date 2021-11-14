@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lkiThakur/surbaggi.git"
+    "url": "git+https://github.com/adarsh-sgh/surbaggi.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/lkiThakur/surbaggi/issues"
+    "url": "https://github.com/adarsh-sgh/surbaggi/issues"
   },
-  "homepage": "https://github.com/lkiThakur/surbaggi#readme",
+  "homepage": "https://github.com/adarsh-sgh/surbaggi#readme",
   "dependencies": {
     "express": "^4.17.1",
     "socket.io": "^3.0.0"
