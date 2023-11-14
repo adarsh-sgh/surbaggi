@@ -1,34 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta name="description" content="Multiplayer strategy board game is also known as Sixteen Soldiers,Bead 16 and Sholo guti " />
-    <meta charset="UTF-8">
-    <meta property="og:image" content="/assets/og.png"> 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="style.css">
-    <title>Surbaggi</title>
-</head>
-<body>
-    <h3 style="text-align: center;">Surbaggi</h3>
-    <div id="notice" class="overlay"></div>
-    <canvas id="board" width="499" height="899" onclick="clickHandler(event)"></canvas>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="surbaggi.js"></script>
-    <span id="sendname" onclick="sendName()">Tell Your Name</span>
-    <div id="killstats">
-        <h5>Killed Pieces</h5>
-       <span id="killed1">0</span> 🔴<br>
-       <span id="killed2">0</span> 🔵️
-    </div>
-    <div id="footer">
-        <a href="https://github.com/adarsh-sgh/surbaggi/archive/master.zip" class="footer"
-            title="download zip for offline usage or Anything">Download code.</a>
-        <a href="https://github.com/adarsh-sgh/surbaggi/" class="footer">View on github.</a>
-        <a href="mailto:thakurluckysinghbrh@gmail.com?subject=Subaggi game" title="Email to developer"
-            class="footer">Send an Email.</a>
-        <a href="https://www.linkedin.com/in/adarsh-sgh" title="Connect to Adarsh Singh" class="footer">Connect on
-            LinkedIn</a>
-    </div>
-</body>
+    <head>
+        <meta
+            name="description"
+            content="Multiplayer strategy board game is also known as Sixteen Soldiers,Bead 16 and Sholo guti "
+        />
+        <meta charset="UTF-8" />
+        <meta property="og:image" content="/assets/og.png" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="shortcut icon"
+            href="assets/favicon.ico"
+            type="image/x-icon"
+        />
+        <link rel="stylesheet" href="style.css" />
+        <title>Surbaggi</title>
+    </head>
+    <body>
+        <h3 style="text-align: center">Surbaggi</h3>
+        <div id="notice" class="overlay"></div>
+        <canvas
+            id="board"
+            width="499"
+            height="899"
+            onclick="clickHandler(event)"
+        ></canvas>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="surbaggi.js"></script>
+        <span id="sendname" onclick="sendName()">Tell Your Name</span>
+        <div id="killstats">
+            <h5>Killed Pieces</h5>
+            <span id="killed1">0</span> 🔴<br />
+            <span id="killed2">0</span> 🔵️
+        </div>
+        <div id="footer">
+            <a
+                href="https://github.com/adarsh-sgh/surbaggi/archive/master.zip"
+                class="footer"
+                title="download zip for offline usage or Anything"
+                >Download code.</a
+            >
+            <a href="https://github.com/adarsh-sgh/surbaggi/" class="footer"
+                >View on github.</a
+            >
+            <a
+                href="mailto:thakurluckysinghbrh@gmail.com?subject=Subaggi game"
+                title="Email to developer"
+                class="footer"
+                >Send an Email.</a
+            >
+            <a
+                href="https://www.linkedin.com/in/adarsh-sgh"
+                title="Connect to Adarsh Singh"
+                class="footer"
+                >Connect on LinkedIn</a
+            >
+        </div>
+    </body>
 </html>

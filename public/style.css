@@ -1,6 +1,6 @@
-.overlay{
+.overlay {
     position: fixed;
-    background-color:aqua;
+    background-color: aqua;
     z-index: 2;
     width: 100%;
     text-align: center;
@@ -8,29 +8,36 @@
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
 }
-#sendname{border-radius: 25px;background-color: green;padding: 15px;display: inline-flex;color: white;font-size: large;}
-#killstats{
+#sendname {
+    border-radius: 25px;
+    background-color: green;
+    padding: 15px;
+    display: inline-flex;
+    color: white;
+    font-size: large;
+}
+#killstats {
     float: right;
 }
-#killstats>h5{
+#killstats > h5 {
     margin: 0px;
 }
-h3{
+h3 {
     display: none;
 }
-#notice{
+#notice {
     text-align: center;
 }
-#footer{
+#footer {
     display: none;
     text-align: center;
 }
 @media only screen and (min-width: 500px) {
-#footer{
-    display: block;
+    #footer {
+        display: block;
+    }
 }
-}
-canvas{
+canvas {
     margin-left: auto;
     margin-right: auto;
     display: block;
